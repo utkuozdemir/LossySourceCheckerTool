@@ -71,6 +71,8 @@
             this.fileListDataGridView.Name = "fileListDataGridView";
             this.fileListDataGridView.Size = new System.Drawing.Size(681, 411);
             this.fileListDataGridView.TabIndex = 1;
+            this.fileListDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.fileListDataGridView_RowsAdded);
+            this.fileListDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.fileListDataGridView_RowsRemoved);
             // 
             // fileName
             // 

@@ -12,6 +12,8 @@ namespace LossySourceCheckerTool
 {
     public partial class MainWindow : Form
     {
+        private const string appName = "Lossless File Source Checker";
+
         private int red = 0, green = 0;
         private const int COLOR_MAX_VALUE = 255;
         private string[] allowedFormats = { ".wav", ".flac" };
@@ -19,10 +21,22 @@ namespace LossySourceCheckerTool
 
         private bool isProcessing = false;
 
-
-        public MainWindow()
+        private void updateHeader()
         {
-            InitializeComponent();
+            this.Text = appName + " - " + fileListDataGridView.Rows.Count + " files selected";
+        }
+
+        private string convertFlacToWav(string fileName)
+        {
+            string result = null;
+            string simpleFileName = Path.GetFileNameWithoutExtension(fileName);
+            result = tempPath + simpleFileName + ".wav";
+
+            string parameterString = "-d \"" + fileName + "\" -o \"" + result + "\"";
+
+            LaunchEXE.Run(tempPath + "LossySourceCheckerTool.flac.exe", parameterString, 0);
+
+            return result;
         }
 
         private void updateColorValues()
@@ -79,10 +93,35 @@ namespace LossySourceCheckerTool
 
         private void addFilesToTable(string[] fileNames)
         {
+            List<string> allFiles = new List<string>();
+
             foreach (string fileName in fileNames)
             {
-                if (!isAlreadyAdded(fileName) && isValidFileFormat(fileName))
-                    fileListDataGridView.Rows.Add(fileName, "Not processed");
+                FileAttributes attr = File.GetAttributes(fileName);
+
+                // is it a directory?
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    foreach (string format in allowedFormats)
+                    {
+                        string[] filePaths = Directory.GetFiles(fileName, "*" + format, SearchOption.AllDirectories);
+                        foreach (string fn in filePaths)
+                        {
+                            if (!isAlreadyAdded(fn) && isValidFileFormat(fn))
+                                allFiles.Add(fn);
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!isAlreadyAdded(fileName) && isValidFileFormat(fileName))
+                        allFiles.Add(fileName);
+                }
+            }
+            foreach (string currentFile in allFiles)
+            {
+                fileListDataGridView.Rows.Add(currentFile, "Not processed");
             }
         }
 
@@ -138,6 +177,23 @@ namespace LossySourceCheckerTool
             }
         }
 
+
+        // ----------------------------- GENERATED ---------------------------------------------
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            tempPath = System.IO.Path.GetTempPath();
+            detectModeValueLabel.Text = detectModeTrackBar.Value.ToString();
+            updateColorValues();
+            updateHeader();
+            recreateAllExecutableResources();
+        }
+
         private void checkButton_Click(object sender, EventArgs e)
         {
             if (isProcessing)
@@ -159,13 +215,7 @@ namespace LossySourceCheckerTool
             }
         }
 
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-            tempPath = System.IO.Path.GetTempPath();
-            detectModeValueLabel.Text = detectModeTrackBar.Value.ToString();
-            updateColorValues();
-            recreateAllExecutableResources();
-        }
+
 
         private void detectModeTrackBar_Scroll(object sender, EventArgs e)
         {
@@ -251,18 +301,7 @@ namespace LossySourceCheckerTool
             isProcessing = false;
         }
 
-        private string convertFlacToWav(string fileName)
-        {
-            string result = null;
-            string simpleFileName = Path.GetFileNameWithoutExtension(fileName);
-            result = tempPath + simpleFileName + ".wav";
 
-            string parameterString = "-d \"" + fileName + "\" -o \"" + result + "\"";
-
-            LaunchEXE.Run(tempPath + "LossySourceCheckerTool.flac.exe", parameterString, 0);
-
-            return result;
-        }
 
         private void checkerBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -289,6 +328,16 @@ namespace LossySourceCheckerTool
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             removeAllExecutableResources();
+        }
+
+        private void fileListDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            updateHeader();
+        }
+
+        private void fileListDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            updateHeader();
         }
     }
 }
