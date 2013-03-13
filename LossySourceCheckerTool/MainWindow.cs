@@ -14,6 +14,8 @@ namespace LossySourceCheckerTool
     {
         private const string appName = "Lossless File Source Checker";
 
+        private int cc = 0;
+
         private int red = 0, green = 0;
         private const int COLOR_MAX_VALUE = 255;
         private string[] allowedFormats = { ".wav", ".flac" };
@@ -338,6 +340,33 @@ namespace LossySourceCheckerTool
         private void fileListDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             updateHeader();
+        }
+
+        private void detectModeLevelLabel_Click(object sender, EventArgs e)
+        {
+            cc++;
+            if (cc == 10)
+            {
+                MessageBox.Show("Hello!");
+                ccTimer.Stop();
+                cc = 0;
+            }
+            if (!ccTimer.Enabled)
+            {
+                ccTimer.Start();
+            }
+        }
+
+        private void ccTimer_Tick(object sender, EventArgs e)
+        {
+            if (cc == 0)
+            {
+                ccTimer.Stop();
+            }
+            else
+            {
+                cc--;
+            }
         }
     }
 }

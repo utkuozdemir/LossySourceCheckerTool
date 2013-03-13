@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.checkButton = new System.Windows.Forms.Button();
             this.fileListDataGridView = new System.Windows.Forms.DataGridView();
@@ -41,6 +42,7 @@
             this.addFilesButton = new System.Windows.Forms.Button();
             this.clearAllButton = new System.Windows.Forms.Button();
             this.bottomPanel = new System.Windows.Forms.Panel();
+            this.ccTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.fileListDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.detectModeTrackBar)).BeginInit();
             this.bottomPanel.SuspendLayout();
@@ -113,6 +115,7 @@
             this.detectModeLevelLabel.Size = new System.Drawing.Size(101, 13);
             this.detectModeLevelLabel.TabIndex = 6;
             this.detectModeLevelLabel.Text = "Detect Mode Level:";
+            this.detectModeLevelLabel.Click += new System.EventHandler(this.detectModeLevelLabel_Click);
             // 
             // detectModeValueLabel
             // 
@@ -166,6 +169,11 @@
             this.bottomPanel.Size = new System.Drawing.Size(681, 79);
             this.bottomPanel.TabIndex = 10;
             // 
+            // ccTimer
+            // 
+            this.ccTimer.Interval = 1000;
+            this.ccTimer.Tick += new System.EventHandler(this.ccTimer_Tick);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -203,6 +211,7 @@
         private System.Windows.Forms.Button addFilesButton;
         private System.Windows.Forms.Button clearAllButton;
         private System.Windows.Forms.Panel bottomPanel;
+        private System.Windows.Forms.Timer ccTimer;
     }
 }
 
