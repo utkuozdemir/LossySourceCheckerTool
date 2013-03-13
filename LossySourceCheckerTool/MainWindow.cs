@@ -97,21 +97,23 @@ namespace LossySourceCheckerTool
                 {
                     string saveAsName = resourceName;
                     FileInfo fileInfoOutputFile = new FileInfo(tempPath + saveAsName);
-
-                    FileStream streamToOutputFile = fileInfoOutputFile.OpenWrite();
-                    Stream streamToResourceFile =
-                                        currentAssembly.GetManifestResourceStream(resourceName);
-
-                    const int size = 4096;
-                    byte[] bytes = new byte[4096];
-                    int numBytes;
-                    while ((numBytes = streamToResourceFile.Read(bytes, 0, size)) > 0)
+                    if (!fileInfoOutputFile.Exists)
                     {
-                        streamToOutputFile.Write(bytes, 0, numBytes);
-                    }
+                        FileStream streamToOutputFile = fileInfoOutputFile.OpenWrite();
+                        Stream streamToResourceFile =
+                                            currentAssembly.GetManifestResourceStream(resourceName);
 
-                    streamToOutputFile.Close();
-                    streamToResourceFile.Close();
+                        const int size = 4096;
+                        byte[] bytes = new byte[4096];
+                        int numBytes;
+                        while ((numBytes = streamToResourceFile.Read(bytes, 0, size)) > 0)
+                        {
+                            streamToOutputFile.Write(bytes, 0, numBytes);
+                        }
+
+                        streamToOutputFile.Close();
+                        streamToResourceFile.Close();
+                    }
                 }
 
             }
@@ -150,6 +152,7 @@ namespace LossySourceCheckerTool
                 }
                 else
                 {
+                    recreateAllExecutableResources();
                     checkButton.Text = "STOP!";
                     checkerBackgroundWorker.RunWorkerAsync(detectModeTrackBar.Value);
                 }

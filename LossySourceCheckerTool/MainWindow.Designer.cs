@@ -40,13 +40,15 @@
             this.checkerBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.addFilesButton = new System.Windows.Forms.Button();
             this.clearAllButton = new System.Windows.Forms.Button();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.fileListDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.detectModeTrackBar)).BeginInit();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkButton
             // 
-            this.checkButton.Location = new System.Drawing.Point(535, 427);
+            this.checkButton.Location = new System.Drawing.Point(535, 10);
             this.checkButton.Name = "checkButton";
             this.checkButton.Size = new System.Drawing.Size(134, 23);
             this.checkButton.TabIndex = 0;
@@ -57,15 +59,17 @@
             // fileListDataGridView
             // 
             this.fileListDataGridView.AllowUserToAddRows = false;
+            this.fileListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fileListDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.fileListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.fileListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fileName,
             this.result});
-            this.fileListDataGridView.Dock = System.Windows.Forms.DockStyle.Top;
             this.fileListDataGridView.Location = new System.Drawing.Point(0, 0);
             this.fileListDataGridView.Name = "fileListDataGridView";
-            this.fileListDataGridView.Size = new System.Drawing.Size(681, 421);
+            this.fileListDataGridView.Size = new System.Drawing.Size(681, 411);
             this.fileListDataGridView.TabIndex = 1;
             // 
             // fileName
@@ -81,7 +85,7 @@
             // 
             // detectModeTrackBar
             // 
-            this.detectModeTrackBar.Location = new System.Drawing.Point(15, 449);
+            this.detectModeTrackBar.Location = new System.Drawing.Point(15, 32);
             this.detectModeTrackBar.Maximum = 40;
             this.detectModeTrackBar.Name = "detectModeTrackBar";
             this.detectModeTrackBar.Size = new System.Drawing.Size(398, 45);
@@ -92,7 +96,7 @@
             // detectModeLabel
             // 
             this.detectModeLabel.AutoSize = true;
-            this.detectModeLabel.Location = new System.Drawing.Point(12, 433);
+            this.detectModeLabel.Location = new System.Drawing.Point(12, 16);
             this.detectModeLabel.Name = "detectModeLabel";
             this.detectModeLabel.Size = new System.Drawing.Size(401, 13);
             this.detectModeLabel.TabIndex = 5;
@@ -102,7 +106,7 @@
             // detectModeLevelLabel
             // 
             this.detectModeLevelLabel.AutoSize = true;
-            this.detectModeLevelLabel.Location = new System.Drawing.Point(416, 467);
+            this.detectModeLevelLabel.Location = new System.Drawing.Point(416, 50);
             this.detectModeLevelLabel.Name = "detectModeLevelLabel";
             this.detectModeLevelLabel.Size = new System.Drawing.Size(101, 13);
             this.detectModeLevelLabel.TabIndex = 6;
@@ -113,7 +117,7 @@
             this.detectModeValueLabel.AutoSize = true;
             this.detectModeValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.detectModeValueLabel.ForeColor = System.Drawing.Color.Black;
-            this.detectModeValueLabel.Location = new System.Drawing.Point(523, 462);
+            this.detectModeValueLabel.Location = new System.Drawing.Point(523, 45);
             this.detectModeValueLabel.Name = "detectModeValueLabel";
             this.detectModeValueLabel.Size = new System.Drawing.Size(18, 20);
             this.detectModeValueLabel.TabIndex = 7;
@@ -127,7 +131,7 @@
             // 
             // addFilesButton
             // 
-            this.addFilesButton.Location = new System.Drawing.Point(419, 427);
+            this.addFilesButton.Location = new System.Drawing.Point(419, 10);
             this.addFilesButton.Name = "addFilesButton";
             this.addFilesButton.Size = new System.Drawing.Size(110, 23);
             this.addFilesButton.TabIndex = 8;
@@ -137,7 +141,7 @@
             // 
             // clearAllButton
             // 
-            this.clearAllButton.Location = new System.Drawing.Point(547, 457);
+            this.clearAllButton.Location = new System.Drawing.Point(547, 40);
             this.clearAllButton.Name = "clearAllButton";
             this.clearAllButton.Size = new System.Drawing.Size(121, 27);
             this.clearAllButton.TabIndex = 9;
@@ -145,20 +149,29 @@
             this.clearAllButton.UseVisualStyleBackColor = true;
             this.clearAllButton.Click += new System.EventHandler(this.clearAllButton_Click);
             // 
+            // bottomPanel
+            // 
+            this.bottomPanel.Controls.Add(this.detectModeLabel);
+            this.bottomPanel.Controls.Add(this.detectModeValueLabel);
+            this.bottomPanel.Controls.Add(this.clearAllButton);
+            this.bottomPanel.Controls.Add(this.checkButton);
+            this.bottomPanel.Controls.Add(this.addFilesButton);
+            this.bottomPanel.Controls.Add(this.detectModeTrackBar);
+            this.bottomPanel.Controls.Add(this.detectModeLevelLabel);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 417);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(681, 79);
+            this.bottomPanel.TabIndex = 10;
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 496);
-            this.Controls.Add(this.clearAllButton);
-            this.Controls.Add(this.addFilesButton);
-            this.Controls.Add(this.detectModeValueLabel);
-            this.Controls.Add(this.detectModeLevelLabel);
-            this.Controls.Add(this.detectModeLabel);
-            this.Controls.Add(this.detectModeTrackBar);
+            this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.fileListDataGridView);
-            this.Controls.Add(this.checkButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Lossless File Source Checker";
@@ -168,8 +181,9 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainWindow_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.fileListDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.detectModeTrackBar)).EndInit();
+            this.bottomPanel.ResumeLayout(false);
+            this.bottomPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -186,6 +200,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn result;
         private System.Windows.Forms.Button addFilesButton;
         private System.Windows.Forms.Button clearAllButton;
+        private System.Windows.Forms.Panel bottomPanel;
     }
 }
 
